@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<!--<link rel="stylesheet" href="published.component.css">-->
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <title></title>
+</head>
+<body>
+  <p *ngIf="!this.article"><em>Loading article...</em></p>
+  <!--writer and editor action buttons-->
+  <table width="90%" *ngIf="this.article">
+    <tr>
+      <td width="45%">
+        <label for="msg" class="msggreen">{{msg}}</label>
+      </td>
+      <!--writer and Editor's button bar-->
+
+      <td width="50%" align="right">
+        <span style="float:left;">
+          <span class='glyphicon glyphicon-file' style="color:cornflowerblue"> {{this.article.commentCount}}  </span> &nbsp;
+          <!-- white up -->
+          <button *ngIf="!this.isWriter && this.article !=null && this.article.viewerVote != 1 "
+                  class='glyphicon glyphicon-thumbs-up' style="color:cornflowerblue"
+                  (click)="this.voteUp();"></button>
+          <!-- blue up -->
+          <button *ngIf="!this.isWriter && this.article !=null && this.article.viewerVote == 1 "
+                  class='glyphicon glyphicon-thumbs-up' style="background:cornflowerblue"
+                  (click)="this.voteUp();"></button>
+
+          <img *ngIf="this.isWriter" src="~/_images/VoteUp.png" alt="UpVotes" class="smallimage">
+          {{this.article.upVote}}&nbsp;
+
+          <!-- white down -->
+          <button *ngIf="!this.isWriter && this.article !=null && this.article.viewerVote != -1"
+                  class='glyphicon glyphicon-thumbs-down' style="color:cornflowerblue"
+                  (click)="this.voteDown();"></button>
+          <!-- blue down -->
+          <button *ngIf="!this.isWriter && this.article !=null && this.article.viewerVote == -1"
+                  class='glyphicon glyphicon-thumbs-down' style="background:cornflowerblue"
+                  (click)="this.voteDown();">
+          </button>
+          <img *ngIf="this.isWriter" src="~/_images/VoteDown.png" alt="DownVotes" class="smallimage">
+
+          {{this.article.downVote}} &nbsp;
+          <img src="~/_images/Comment.png" alt="Comments" class="smallimage">
+          {{this.article.commentCount}} &nbsp;
+        </span>
+
+        <img *ngIf=" this.isEditor || this.isWriter || this.isAdmin"
+             title="Save"
+             class="actionbuttonimage"
+             src="~/_images/Save.png"
+             alt="Save"
+             (click)="saveArticle()">
+
+        <img *ngIf="(this.isEditor ||  this.isWriter  || this.isAdmin) && this.article.id !== undefined"
+             title="Submit"
+             class="actionbuttonimage"
+             src="~/_images/Submit.png"
+             alt="Submit"
+             (click)="submitArticle()">
+        <img *ngIf=" (this.isWriter  || this.isAdmin) && !isNewArticle"
+             title="Delete"
+             class="actionbuttonimage"
+             src="~/_images/Delete.png"
+             alt="Delete"
+             (click)="deleteArticle()">
+
+        <img *ngIf=" (this.isEditor  || this.isAdmin) && !isNewArticle"
+             title="Reject"
+             class="actionbuttonimage"
+             src="~/_images/Reject.png"
+             alt="Reject"
+             (click)="rejectArticle()">
+        <img *ngIf="( this.isEditor  || this.isAdmin) && !isNewArticle"
+             title="Publish"
+             class="actionbuttonimage"
+             src="~/_images/Publish.png"
+             alt="Publish"
+             (click)="publishArticle()">
+      </td>
+    </tr>
+  </table>
+  <!--Article facts-->
+  <div *ngIf="article">
+    <button class="accordion"
+            (click)="setAccordionSign(1)">
+      {{getAccordionSign(1)}} Article Facts
+    </button>
+    <div *ngIf="this.accordionExpand[1]">
+      <table>
+        <tr>
+          <td>
+            <label for="Title">Title</label><br />
+            <textarea id="Title" name="Title" rows="1" cols="50" style=" margin-right: 10px;" [(ngModel)]='article.title'></textarea>
+          </td>
+          <td>
+            <label for="Genre">Genre</label>
+
+            <select [(ngModel)]="article.genreId"
+                    id="Genre">
+              <option *ngFor="let x of this.genres" value="{{x.value }}">
+                {{x.text}}
+              </option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label for="Subtitle">Subtitle</label><br />
+            <textarea id="Subtitle" name="Subtitle" rows="1" cols="50" style=" margin-right: 10px;"
+                      [(ngModel)]='article.subtitle'></textarea>
+          </td>
+          <td>
+            <label for="Genre">Book cover</label>
+            image uploader here.
+          </td>
+        </tr>
+
+      </table>
+
+      <label for="Summary">Summary</label>
+      <br />
+      <textarea id="Summary" name="Summary" rows="2" cols="100" [(ngModel)]='article.summary'></textarea>
+    </div>
+    <!--Article content-->
+    <button class="accordion"
+            (click)="setAccordionSign(2)">
+      {{getAccordionSign(2)}} Content
+    </button>
+    <textarea id="Content" name="Content" rows="18" cols="100"
+              *ngIf="this.accordionExpand[2]"
+              [(ngModel)]='article.content'></textarea>
+    <!--Article 's editor review feedback -->
+    <button class="accordion"
+            (click)="setAccordionSign(3)"
+            *ngIf=" (this.isWriter && article.editorReviewNote !== '' ) || this.isEditor ">
+      {{getAccordionSign(3)}} Editor Review Notes  from [{{ this.article.editorUserName}}]
+    </button>
+    <textarea id="EditorReviewNote"
+              name="EditorReviewNote"
+              *ngIf="this.accordionExpand[3]"
+              [disabled]="!this.isEditor"
+              rows="2" cols="100"
+              [(ngModel)]="article.editorReviewNote"></textarea>
+
+    <!--request assignment-->
+    <button class="accordion"
+            (click)="setAccordionSign(4)"
+            *ngIf=" (this.isWriter ) || this.isAdmin ">
+      {{getAccordionSign(4)}} request services
+    </button>
+    <div>
+      <table *ngIf="this.accordionExpand[3]"
+             style="border-spacing: 10px;border-collapse: separate;">
+        <tr>
+          <td>
+            <input type="checkbox" id="RequestDrawer"
+                   name="RequestDrawer"
+                   [(ngModel)]="this.requestDrawer">Request Illustrator
+          </td>
+          <td>
+            <input type="checkbox" id="RequestTutor"
+                   name="RequestTutor"
+                   [(ngModel)]="this.requestDrawer">Request Tutor
+          </td>
+        </tr>
+      </table>
+    </div>
+    <!--readonly part-->
+    <div *ngIf="article && !this.isEditor && ! this.isWriter && this.isReader">
+
+      <button class="accordion"
+              (click)="setAccordionSign(5)">
+        {{getAccordionSign(5)}} {{ article.title }} by {{ article.authorPenName }}
+      </button>
+      <div *ngIf="this.accordionExpand[5]">
+
+        <h2>{{ article.title }}</h2>
+        <h3>{{ article.subtitle}}</h3>
+        <a *ngIf="article.authorIsPublicProfile"
+           href="/userdetails?id={{article.authorUserId }}&isEditable=false">{{ article.authorPenName }}</a>
+        <span *ngIf="!article.authorIsPublicProfile">{{ article.authorPenName }}</span>
+        <p>{{article.content}}</p>
+      </div>
+
+      <!--Comments open for all readers/Writers-->
+      <button class="accordion"
+              (click)="setAccordionSign(6)">
+        {{getAccordionSign(6)}} Comments
+      </button>
+      <div *ngIf="this.accordionExpand[6]">
+        <span style="float:right;">
+          <button class='glyphicon glyphicon-share' (click)="this.saveComment();"></button>
+          <button class='glyphicon glyphicon-refresh' (click)="this.getComments();"></button>
+        </span><br>
+        <textarea id="NewComment" name="NewComment" rows="2" cols="100"
+                  [(ngModel)]='this.newComment'></textarea>
+        <ul>
+          <li *ngFor="let ac of article.comments">
+            <span style="color:darkblue;font-size:8px">
+              {{ac.commentDate}}  {{ac.commentOwnerPenName}}:
+            </span> {{ac.comment}}
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

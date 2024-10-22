@@ -1,0 +1,81 @@
+
+
+  <div class='main-nav'>
+    <div class="navbar navbar">
+      <div class="navbar-header">
+        <table>
+        
+          <tr>
+            <td align="right">
+              <button *ngIf="isLoggedInWriter()"
+                      (click)="redirectToNewArticle()"
+                      style="padding: 0; border: none; background: none; background: none;">
+                <img src="~/favicon.ico" style="color: darkblue;" class="smallerimage">
+              </button>
+
+              <button *ngIf="isLoggedIn()"
+                      (click)="redirectToUserDetail()"
+                      style="padding: 0; border: none; background: none;">
+                <span _ngcontent-c1="" class="glyphicon glyphicon-cog"></span>
+              </button>
+              <span class="navbar-brand">{{getUsername()}}</span>
+            </td>
+            <td align="left">
+              <a class="navbar-brand glyphicon glyphicon-log-in"
+                 *ngIf="!isLoggedIn()"
+                 [routerLink]='["/login"]'
+                 style="font-size: 15px;">&nbsp;Login</a>
+              <a class="navbar-brand" *ngIf="isLoggedIn()" (click)="logOut()" style="font-size: 15px;">Logout</a>
+            </td>
+          </tr>
+        </table>
+        <ul class='navbar-nav'>
+
+          <li [routerLinkActive]='["link-active"]' [routerLinkActiveOptions]='{ exact: true }'>
+            <a [routerLink]='["/"]' (click)='collapse()'>
+              <span class='glyphicon glyphicon-home'></span> Home
+            </a>
+          </li>
+
+          <li *ngIf="isLoggedIn()" [routerLinkActive]='["link-active"]'>
+            <a [routerLink]='["/memberdashboard"]' (click)='collapse()'>
+              <span class='glyphicon glyphicon-th'></span> My Dashboard
+            </a>
+          </li>
+          <li [routerLinkActive]='["link-active"]'>
+            <a [routerLink]='["/published"]' (click)='collapse()'>
+              <span class='glyphicon glyphicon-book'></span> Published
+            </a>
+          </li>
+          <li [routerLinkActive]='["link-active"]'>
+            <a [routerLink]='["/hallofame"]' (click)='collapse()'>
+              <span class='glyphicon glyphicon-star'></span> Hall Of Fame
+            </a>
+          </li>
+          <li [routerLinkActive]='["link-active"]'>
+            <a [routerLink]='["/aboutus"]' (click)='collapse()'>
+              <span class='glyphicon glyphicon-education'></span> About Us
+            </a>
+          </li>
+
+          <li [routerLinkActive]='["link-active"]'>
+            <a [routerLink]='["/fetch-data"]' (click)='collapse()'>
+              <span class='glyphicon glyphicon-wrench'></span> Admin test yard
+            </a>
+          </li>
+          <li *ngIf="isLoggedInAdmin()"
+              [routerLinkActive]='["link-active"]'>
+            <a [routerLink]='["/userlist"]' (click)='collapse()'>
+              <span class='glyphicon glyphicon-user'></span> User List
+            </a>
+          </li>
+
+          <li [routerLinkActive]='["link-active"]'>
+            <a [routerLink]='["/fetch-data"]' (click)='collapse()'>
+              <span class='glyphicon glyphicon-cloud'></span> weather forecast
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>

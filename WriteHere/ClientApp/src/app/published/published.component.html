@@ -1,0 +1,28 @@
+<body>
+  <h1 >Published Articles</h1>
+  
+  <p >Welcome to the home page of all the published articles. On this page you will find articles to read.</p>
+  <table style="width:90%" >
+    <thead>
+      <tr>
+        <th  width="35%">Title</th>
+        <th  width="25%">Author</th>
+        <th width="15%">Genre</th>
+        <th width="8%"><p class="glyphicon glyphicon-file" style="color:cornflowerblue"></p></th>
+        <th width="6%" ><p class="glyphicon glyphicon-thumbs-up" style="color:green"></p></th>
+        <th width="6%"><p class="glyphicon glyphicon-thumbs-down" style="color:brown "></p></th>
+        <th width="6%"><p class="glyphicon glyphicon-list-alt" style="color:cornflowerblue"></p></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let a of articles">
+        <td><a href="articledetails?id={{ a.id }}">{{ a.title }}</a></td>
+        <td>{{a.authorPenName }}</td>
+        <td>{{a.genre}}</td>
+        <td>{{a.viewedCount}}</td>
+        <td>{{a.upVote}}</td>
+        <td>{{a.downVote}}</td>
+        <td>{{a.commentCount}}</td>
+      </tr>
+    </tbody>
+  </table>

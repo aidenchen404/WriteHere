@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+<head>
+  
+ 
+</head>
+<body>
+  <p *ngIf="!hallOfFamePack"><em>Loading Hall of Fame...</em></p>
+  <div *ngIf="hallOfFamePack">
+    <h1>Hall of Fame</h1>
+    <div *ngIf="hallOfFamePack.mostViewed">
+      <button class="accordion"
+              (click)="setAccordionSign(1)">
+        {{getAccordionSign(1)}} Most Viewed Author
+      </button>
+
+      <table *ngIf="this.accordionExpand[1]" style="width:60%">
+        <thead>
+          <tr>
+            <th width="10%"></th>
+            <th width="30%">Author</th>
+            <th width="30%">Article</th>
+            <th width="20%">Viewed</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let a of hallOfFamePack.mostViewed">
+            <td>{{a.rowNumber}}</td>
+            <td><a href="/userdetails?id={{ a.authorUserId }}&isEditable=false">{{ a.personName }}</a></td>
+            <td><a href="/articledetails?id={{ a.articleId }}&isEditable=false">{{ a.articleTitle }}</a></td>
+            <td>{{a.rankCount}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div *ngIf="hallOfFamePack.mostVoteUp">
+      <button class="accordion"
+              (click)="setAccordionSign(2)">
+        {{getAccordionSign(2)}} Most Liked Author
+      </button>
+      <table *ngIf="this.accordionExpand[2]" style="width:60%">
+        <thead>
+          <tr>
+            <th width="10%"></th>
+            <th width="30%">Author</th>
+            <th width="30%">Article</th>
+            <th width="20%">Liked</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let a of hallOfFamePack.mostVoteUp">
+            <td>{{a.rowNumber}}</td>
+            <td><a href="/userdetails?id={{ a.authorUserId }}&isEditable=false">{{ a.personName }}</a></td>
+            <td><a href="/articledetails?id={{ a.articleId }}&isEditable=false">{{ a.articleTitle }}</a></td>
+            <td>{{a.rankCount}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div *ngIf="hallOfFamePack.mostPublished">
+      <button class="accordion"
+              (click)="setAccordionSign(3)">
+        {{getAccordionSign(3)}} Most Published Author
+      </button>
+      <table *ngIf="this.accordionExpand[3]" style="width:60%">
+        <thead>
+          <tr>
+            <th width="10%"></th>
+            <th width="30%">Author</th>
+            <th width="20%">Published</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let a of hallOfFamePack.mostPublished">
+            <td>{{a.rowNumber}}</td>
+            <td><a href="/userdetails?id={{ a.authorUserId }}&isEditable=false">{{ a.personName }}</a></td>
+            <td>{{a.rankCount}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div *ngIf="hallOfFamePack.mostUprising">
+      <button class="accordion"
+              (click)="setAccordionSign(4)">
+        {{getAccordionSign(4)}} Most Uprising Published Authors --- Not Implemented
+      </button>
+    </div>
+
+    <div *ngIf="hallOfFamePack.mostCommented">
+      <table *ngIf="this.accordionExpand[4]" style="width:60%">
+      </table>
+      <button class="accordion"
+              (click)="setAccordionSign(5)">
+        {{getAccordionSign(5)}} Most Comments for an Author
+      </button>
+      <table *ngIf="this.accordionExpand[5]" style="width:60%">
+        <thead>
+          <tr>
+            <th width="10%"></th>
+            <th width="30%">Author</th>
+            <th width="30%">Article</th>
+            <th width="20%">Commented</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let a of hallOfFamePack.mostCommented">
+            <td>{{a.rowNumber}}</td>
+            <td><a href="/userdetails?id={{ a.authorUserId }}&isEditable=false">{{ a.personName }}</a></td>
+            <td><a href="/articledetails?id={{ a.articleId }}&isEditable=false">{{ a.articleTitle }}</a></td>
+            <td>{{a.rankCount}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div *ngIf="hallOfFamePack.mostVoteDown">
+      <button class="accordion"
+              (click)="setAccordionSign(6)">
+        {{getAccordionSign(6)}} Most Disliked Author
+      </button>
+      <table *ngIf="this.accordionExpand[6]" style="width:60%">
+        <thead>
+        <tr>
+          <th width="10%"></th>
+          <th width="30%">Author</th>
+          <th width="30%">Article</th>
+          <th width="20%">Disliked</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let a of hallOfFamePack.mostVoteDown">
+          <td>{{a.rowNumber}}</td>
+          <td><a href="/userdetails?id={{ a.authorUserId }}&isEditable=false">{{ a.personName }}</a></td>
+          <td><a href="/articledetails?id={{ a.articleId }}&isEditable=false">{{ a.articleTitle }}</a></td>
+          <td>{{a.rankCount}}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div *ngIf="hallOfFamePack.mostRejected">
+      <button class="accordion"
+              (click)="setAccordionSign(7)">
+        {{getAccordionSign(7)}} Most Rejected Author
+      </button>
+      <table *ngIf="this.accordionExpand[7]" style="width:60%">
+        <thead>
+          <tr>
+            <th width="10%"></th>
+            <th width="30%">Author</th>
+            <th width="20%">Rejected</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let a of hallOfFamePack.mostRejected">
+            <td>{{a.rowNumber}}</td>
+            <td><a href="/userdetails?id={{ a.authorUserId }}&isEditable=false">{{ a.personName }}</a></td>
+            <td>{{a.rankCount}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</body>
+</html>

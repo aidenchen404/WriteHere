@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+  <h1>
+    Register here
+  </h1>
+  <p>If you are using a pen name, you do not have to fill in the first name and last name boxes. If you are not using a pen name, the names in the first name and last name boxes will be used. If you are not using a pen name, and do not fill in first name or last name, all works published will go by "anonymous author".</p>
+  <form>
+    <label for="email">E-mail</label><br>
+    <input type="email" id="email" name="email" [(ngModel)]='user.email'><br>
+    <label for="firstname">First Name</label><br>
+    <input type="text" id="firstname" name="firstname" [(ngModel)]='user.firstName'><br>
+    <label for="lastname">Last Name</label><br>
+    <input type="text" id="lastname" name="lastname" [(ngModel)]='user.lastName'><br>
+    <label for="grade">Grade Level (or most recent grade)</label><br>
+    <input type="text" id="grade" name="grade" [(ngModel)]='user.grade'><br>
+    <p>(Please note that your submitted articles will be judged according to the standards of your listed grade level. Grade levels will automatically update according to school years.)</p>
+    <label for="penname">Pen Name:</label><br>
+    <input type="text" id="penname" name="penname" [(ngModel)]='user.userName'><br>
+    <label for="pwd">Password:</label><br>
+    <input type="password" id="pwd" name="pwd" [(ngModel)]='user.loginPassword'>
+  </form>
+  <button (click)="redirectTo()" class="margin">Register</button>
+</body>
+</html>
